@@ -1,6 +1,6 @@
 package com.mit.kln.ac.lk.workflow.repository;
 
-import com.mit.kln.ac.lk.workflow.model.Event;
+import com.mit.kln.ac.lk.workflow.model.Event.Event;
 
 import java.util.List;
 
@@ -12,4 +12,6 @@ public interface EventRepositoryCustom {
     List<Event> findEventsByName(String name);
      **/
     List<Event> findEventsByName(String name);
+
+
 }

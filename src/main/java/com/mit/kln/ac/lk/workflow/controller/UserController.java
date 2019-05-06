@@ -1,24 +1,14 @@
 package com.mit.kln.ac.lk.workflow.controller;
 
-import com.mit.kln.ac.lk.workflow.model.User;
-import com.mit.kln.ac.lk.workflow.service.Implementation.UserServiceImpl;
+import com.mit.kln.ac.lk.workflow.model.User.User;
 import com.mit.kln.ac.lk.workflow.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
-import static java.util.stream.Collectors.toList;
 import static org.springframework.http.ResponseEntity.ok;
 
 
@@ -43,7 +33,7 @@ public class UserController {
     //Create New User
     @PostMapping(value = "/")
     public String createUser(@RequestBody User user){
-        user.setStatus("Active");
+        user.setStatus("ACTIVE");
         return userService.saveUser(user);
     }
 

@@ -1,18 +1,18 @@
 package com.mit.kln.ac.lk.workflow.service.Implementation;
 
+import com.mit.kln.ac.lk.workflow.enums.Designations;
+import com.mit.kln.ac.lk.workflow.enums.UserStatus;
 import com.mit.kln.ac.lk.workflow.exception.ResourceNotFoundException;
-import com.mit.kln.ac.lk.workflow.model.User;
+import com.mit.kln.ac.lk.workflow.model.User.User;
 import com.mit.kln.ac.lk.workflow.repository.UserRepository;
 import com.mit.kln.ac.lk.workflow.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,8 +44,8 @@ public class UserServiceImpl implements UserService {
         user.setFname(updateUser.getFname());
         user.setLname(updateUser.getLname());
         user.setEmail(updateUser.getEmail());
-        user.setDesignation(updateUser.getDesignation());
-        user.setStatus(updateUser.getStatus());
+        user.setDesignation(updateUser.getDesignation().toString());
+        user.setStatus(updateUser.getStatus().toString());
         user.setUpdatedAt(updateUser.getUpdatedAt());
         userRepository.save(user);
         return "User Updated: " + user.getFname() ;
@@ -75,4 +75,17 @@ public class UserServiceImpl implements UserService {
 		
 		return userRepository.findByusername(userName);
 	}
+
+	@Override
+	public List<User> getInspectors(){
+        List<User> inspectors = new ArrayList<>();
+        inspectors.add(userRepository.findInspectors(Designations.HOD.toString(), UserStatus.ACTIVE.toString()).orElse(null));
+        inspectors.add(userRepository.findInspectors(Designations.SENIOR_TREASURER.toString(), UserStatus.ACTIVE.toString()).orElse(null));
+        inspectors.add(userRepository.findInspectors(Designations.PRESIDENT.toString(), UserStatus.ACTIVE.toString()).orElse(null));
+
+        return inspectors;
+
+    }
+
+
 }
